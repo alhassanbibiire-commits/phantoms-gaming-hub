@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phantom's Store | Gaming Hub</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#07070d;color:#f4f4ff;line-height:1.6}
+header{position:sticky;top:0;z-index:10;background:rgba(7,7,13,.9);backdrop-filter:blur(12px);border-bottom:1px solid #24243a}
+nav{max-width:1100px;margin:auto;padding:18px 22px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:1.4rem;font-weight:800;letter-spacing:1px}.logo span{color:#8b5cf6}
+nav a{color:#bbb9cc;text-decoration:none;margin-left:22px}nav a:hover{color:#fff}
+.hero{min-height:78vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:70px 20px;background:radial-gradient(circle at 50% 20%,#35156d 0,#120d22 35%,#07070d 70%)}
+.hero h1{font-size:clamp(2.7rem,8vw,5.8rem);line-height:1;margin-bottom:18px}
+.hero h1 span{color:#a78bfa}.hero p{max-width:650px;margin:0 auto 30px;color:#b9b6c9;font-size:1.1rem}
+.btn{display:inline-block;background:#8b5cf6;color:white;padding:13px 24px;border-radius:10px;text-decoration:none;font-weight:700;box-shadow:0 0 28px #8b5cf655}
+section{max-width:1100px;margin:auto;padding:75px 22px}h2{text-align:center;font-size:2rem;margin-bottom:35px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:#11111b;border:1px solid #28283d;border-radius:16px;padding:25px;transition:.2s}
+.card:hover{transform:translateY(-5px);border-color:#8b5cf6}.icon{font-size:2rem;margin-bottom:12px}.card p{color:#aaa8ba}
+.store{background:#0d0d16;border-top:1px solid #202033;border-bottom:1px solid #202033}
+.product{display:flex;justify-content:space-between;align-items:center;gap:15px}.price{color:#a78bfa;font-weight:800}
+footer{text-align:center;padding:35px 20px;color:#77758a;border-top:1px solid #202033}
+.name{color:#a78bfa;font-weight:800}
+</style>
+</head>
+<body>
+<header>
+<nav><div class="logo">PHANTOM<span>HUB</span></div>
+<div><a href="#games">Games</a><a href="#store">Store</a><a href="#about">About</a></div></nav>
+</header>
+
+<main>
+<section class="hero">
+<div>
+<p class="name">WELCOME TO PHANTOM'S STORE</p>
+<h1>LEVEL UP.<br><span>PLAY HARD.</span></h1>
+<p>Your gaming hub for gear, digital gaming essentials, updates and everything you need for your next session.</p>
+<a class="btn" href="#store">Explore Store</a>
+</div>
+</section>
+
+<section id="games">
+<h2>Gaming Hub</h2>
+<div class="grid">
+<div class="card"><div class="icon">🎮</div><h3>Call of Duty</h3><p>Gear up for intense multiplayer and ranked sessions.</p></div>
+<div class="card"><div class="icon">🔥</div><h3>Free Fire</h3><p>Fast matches, clutch moments and competitive action.</p></div>
+<div class="card"><div class="icon">⚡</div><h3>Gaming Setup</h3><p>Discover ideas for a cleaner, faster gaming experience.</p></div>
+</div>
+</section>
+
+<section class="store" id="store">
+<h2>Phantom's Store</h2>
+<div class="grid">
+<div class="card product"><div><h3>Gaming Essentials</h3><p>Accessories & setup picks</p></div><div class="price">SOON</div></div>
+<div class="card product"><div><h3>Digital Gaming</h3><p>Gaming-focused digital items</p></div><div class="price">SOON</div></div>
+<div class="card product"><div><h3>Phantom Picks</h3><p>Curated favorites from the hub</p></div><div class="price">SOON</div></div>
+</div>
+</section>
+
+<section id="about">
+<h2>About Phantom's Store</h2>
+<div class="card" style="max-width:750px;margin:auto;text-align:center">
+<p>This gaming hub was created for <span class="name">Abdulrazaq</span> — a place to showcase gaming content, products and future gaming projects under Phantom's Store.</p>
+</div>
+</section>
+</main>
+
+<footer>© 2026 Phantom's Store • Built for gamers</footer>
+</body>
+</html>

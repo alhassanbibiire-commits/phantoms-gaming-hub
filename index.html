@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phantom's Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0b0d;
+    --ink-2:#141216;
+    --smoke:#8f9490;
+    --bone:#e9e2d6;
+    --wine:#7a2530;
+    --gold:#a9895a;
+    --line: rgba(233,226,214,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+  ::selection{ background:var(--wine); color:var(--bone); }
+
+  a{ color:inherit; }
+
+  h1,h2,h3{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    letter-spacing:0.01em;
+  }
+
+  .eyebrow{
+    font-family:'Jost', sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.4rem clamp(1.2rem, 4vw, 3.5rem);
+    z-index:50;
+    mix-blend-mode:difference;
+  }
+  .brandmark{
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.15rem;
+    letter-spacing:0.06em;
+  }
+  .navlinks{ display:flex; gap:clamp(1rem,3vw,2.4rem); font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase;}
+  .navlinks a{ text-decoration:none; opacity:0.85; transition:opacity .3s; }
+  .navlinks a:hover, .navlinks a:focus-visible{ opacity:1; }
+  .navlinks{ display:none; }
+  @media(min-width:720px){ .navlinks{ display:flex; } }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:2rem 1.2rem;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 38%, rgba(122,37,48,0.16), transparent 65%),
+      var(--ink);
+  }
+  #wisp-canvas{
+    position:absolute; inset:0; width:100%; height:100%;
+    opacity:0.55;
+    pointer-events:none;
+  }
+  .hero-content{ position:relative; z-index:2; }
+  .hero .eyebrow{ display:block; margin-bottom:1.4rem; opacity:0; animation: rise 1.2s ease forwards 0.3s; }
+  .hero h1{
+    font-size:clamp(3rem, 10vw, 7.2rem);
+    line-height:0.95;
+    color:var(--bone);
+    opacity:0;
+    animation: rise 1.4s ease forwards 0.55s;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:transparent;
+    -webkit-text-stroke:1px var(--bone);
+  }
+  .hero p.tag{
+    margin-top:1.6rem;
+    font-size:clamp(0.95rem,1.6vw,1.15rem);
+    color:var(--smoke);
+    max-width:36ch;
+    margin-left:auto; margin-right:auto;
+    opacity:0;
+    animation: rise 1.4s ease forwards 0.85s;
+  }
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(18px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .scroll-cue{
+    position:absolute; bottom:2.2rem; left:50%; transform:translateX(-50%);
+    font-size:0.68rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--smoke);
+    display:flex; flex-direction:column; align-items:center; gap:0.6rem;
+    opacity:0; animation: rise 1.2s ease forwards 1.3s;
+  }
+  .scroll-cue .line{ width:1px; height:34px; background:linear-gradient(var(--gold), transparent); animation: drip 2.4s ease-in-out infinite; }
+  @keyframes drip{ 0%{ transform:scaleY(0.4); transform-origin:top;} 50%{ transform:scaleY(1); transform-origin:top;} 100%{ transform:scaleY(0.4); transform-origin:bottom;} }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding:clamp(4.5rem,10vw,8rem) clamp(1.2rem,6vw,4rem); position:relative; }
+  .section-head{ max-width:640px; margin:0 auto 3.2rem; text-align:center; }
+  .section-head h2{ font-size:clamp(2.1rem,5vw,3.2rem); margin-top:0.9rem; }
+  .rule{ width:56px; height:1px; background:var(--gold); margin:1.4rem auto 0; opacity:0.7; }
+
+  /* ---------- STORY ---------- */
+  .story{ background:var(--ink-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .story-wrap{ max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr; gap:3rem; align-items:center; }
+  @media(min-width:860px){ .story-wrap{ grid-template-columns:0.9fr 1.1fr; gap:4.5rem; } }
+  .story figure{
+    aspect-ratio:4/5;
+    border:1px solid var(--line);
+    background:
+      linear-gradient(160deg, rgba(122,37,48,0.25), transparent 60%),
+      repeating-linear-gradient(115deg, rgba(233,226,214,0.05) 0 2px, transparent 2px 26px),
+      #17151a;
+    position:relative;
+    overflow:hidden;
+  }
+  .story figure::after{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(circle at 30% 20%, rgba(233,226,214,0.10), transparent 45%);
+    animation: drift 9s ease-in-out infinite alternate;
+  }
+  @keyframes drift{ from{ transform:translate(-4%,-2%) scale(1);} to{ transform:translate(4%,3%) scale(1.08);} }
+  .story-copy p{ margin-top:1.1rem; color:var(--smoke); line-height:1.85; font-size:1.02rem; }
+  .story-copy p:first-of-type{ margin-top:0; }
+  .signature-line{ margin-top:1.8rem; font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.35rem; color:var(--bone); }
+  .signature-line span{ display:block; font-family:'Jost',sans-serif; font-style:normal; font-size:0.7rem; letter-spacing:0.24em; text-transform:uppercase; color:var(--gold); margin-top:0.5rem; }
+
+  /* ---------- MENU ---------- */
+  .menu-grid{ max-width:920px; margin:0 auto; display:grid; gap:0; }
+  .menu-course + .menu-course{ margin-top:3.4rem; }
+  .menu-course-title{ font-size:0.72rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); margin-bottom:1.4rem; text-align:center; }
+  .dish{
+    display:grid; grid-template-columns:1fr auto; column-gap:1.2rem; align-items:baseline;
+    padding:1.15rem 0;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .dish:first-child{ border-top:1px solid var(--line); }
+  .dish-name{ font-family:'Cormorant Garamond', serif; font-size:1.32rem; color:var(--bone); }
+  .dish-price{ font-family:'Cormorant Garamond', serif; font-size:1.15rem; color:var(--gold); }
+  .dish-desc{ grid-column:1/-1; color:var(--smoke); font-size:0.92rem; margin-top:0.4rem; max-width:60ch; line-height:1.6; }
+
+  /* ---------- HOURS / VISIT ---------- */
+  .visit{ background:var(--ink-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .visit-wrap{ max-width:960px; margin:0 auto; display:grid; gap:2.6rem; grid-template-columns:1fr; text-align:center; }
+  @media(min-width:760px){ .visit-wrap{ grid-template-columns:repeat(3,1fr); text-align:left; } }
+  .visit-card h3{ font-size:1.5rem; margin-bottom:0.9rem; }
+  .visit-card p, .visit-card address{ color:var(--smoke); font-style:normal; line-height:1.85; font-size:0.98rem; }
+
+  /* ---------- CTA / RESERVE ---------- */
+  .reserve{ text-align:center; }
+  .reserve h2{ font-size:clamp(2.3rem,6vw,4rem); max-width:16ch; margin:0 auto; }
+  .reserve p{ color:var(--smoke); max-width:44ch; margin:1.2rem auto 2.4rem; line-height:1.8; }
+  .btn{
+    display:inline-block;
+    border:1px solid var(--gold);
+    color:var(--bone);
+    text-decoration:none;
+    padding:0.95rem 2.4rem;
+    font-size:0.8rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    position:relative;
+    overflow:hidden;
+    transition: color .45s ease;
+  }
+  .btn span{ position:relative; z-index:2; }
+  .btn::before{
+    content:""; position:absolute; inset:0; background:var(--wine);
+    transform:translateY(101%); transition:transform .45s ease; z-index:1;
+  }
+  .btn:hover::before, .btn:focus-visible::before{ transform:translateY(0); }
+  .btn:focus-visible{ outline:2px solid var(--gold); outline-offset:4px; }
+
+  footer{
+    padding:2.6rem 1.2rem 3rem;
+    text-align:center;
+    color:var(--smoke);
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    border-top:1px solid var(--line);
+  }
+  footer .brandmark{ display:block; margin-bottom:0.6rem; font-size:1rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brandmark">Phantom's Kitchen</div>
+  <div class="navlinks">
+    <a href="#story">Story</a>
+    <a href="#menu">Menu</a>
+    <a href="#visit">Visit</a>
+    <a href="#reserve">Reserve</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <canvas id="wisp-canvas"></canvas>
+  <div class="hero-content">
+    <span class="eyebrow">A table set after dark</span>
+    <h1>Phantom's<br><em>Kitchen</em></h1>
+    <p class="tag">Live-fire cooking, low light, and dishes that vanish before you've finished telling someone about them.</p>
+  </div>
+  <div class="scroll-cue"><span>Enter</span><span class="line"></span></div>
+</header>
+
+<section class="story" id="story">
+  <div class="story-wrap">
+    <figure aria-hidden="true"></figure>
+    <div class="story-copy">
+      <span class="eyebrow">The Kitchen</span>
+      <h2 style="margin-top:0.7rem;">Cooked over embers, served in shadow.</h2>
+      <p>Phantom's Kitchen opened in a room that used to be a coal cellar, and it still cooks like one. Every dish crosses an open flame before it crosses the pass, and the dining room stays lit by candle and coal-glow alone.</p>
+      <p>There is no printed history on the wall and no house legend to recite. Only a short, changing menu, a long charcoal grill, and a kitchen that prefers to let the food explain itself.</p>
+      <p class="signature-line">"We don't season for memory. We season so you can't quite recall what a tomato tasted like before this one."<span>Head Chef, Phantom's Kitchen</span></p>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="section-head">
+    <span class="eyebrow">After Dark Menu</span>
+    <h2>What's Cooking</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="menu-grid">
+    <div class="menu-course">
+      <div class="menu-course-title">To Begin</div>
+
+      <div class="dish">
+        <div class="dish-name">Charred Bread &amp; Bone Butter</div>
+        <div class="dish-price">9</div>
+        <div class="dish-desc">Embered sourdough, whipped marrow butter, smoked salt.</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">Ash-Roasted Beets</div>
+        <div class="dish-price">13</div>
+        <div class="dish-desc">Buried in coal for two hours, sharp goat curd, walnut oil.</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">Smoke-Cured Trout</div>
+        <div class="dish-price">16</div>
+        <div class="dish-desc">Cold-smoked over applewood, pickled fennel, rye crisp.</div>
+      </div>
+    </div>
+
+    <div class="menu-course">
+      <div class="menu-course-title">Off the Fire</div>
+
+      <div class="dish">
+        <div class="dish-name">Coal-Fired Ribeye</div>
+        <div class="dish-price">48</div>
+        <div class="dish-desc">Dry-aged 35 days, bone marrow jus, charred shallot.</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">Ember Roasted Half Chicken</div>
+        <div class="dish-price">31</div>
+        <div class="dish-desc">Brined overnight, burnt lemon, drippings gravy.</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">Blackened Cauliflower</div>
+        <div class="dish-price">24</div>
+        <div class="dish-desc">Whole roasted, chili oil, crushed hazelnut, mint.</div>
+      </div>
+    </div>
+
+    <div class="menu-course">
+      <div class="menu-course-title">Last Rites</div>
+
+      <div class="dish">
+        <div class="dish-name">Burnt Honey Custard</div>
+        <div class="dish-price">12</div>
+        <div class="dish-desc">Torched top, sea salt, oat crumble.</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">Midnight Chocolate Tart</div>
+        <div class="dish-price">14</div>
+        <div class="dish-desc">Dark 70% ganache, espresso crust, smoked cream.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="visit" id="visit">
+  <div class="section-head">
+    <span class="eyebrow">Find Us</span>
+    <h2>Visit the Kitchen</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="visit-wrap">
+    <div class="visit-card">
+      <h3>Hours</h3>
+      <p>Tuesday – Saturday<br>5:30pm – Midnight<br>Closed Sunday &amp; Monday</p>
+    </div>
+    <div class="visit-card">
+      <h3>Address</h3>
+      <address>Ireakari Estate</address>
+    </div>
+    <div class="visit-card">
+      <h3>Contact</h3>
+      <p>09133038605<br>hello@phantomskitchen.com</p>
+    </div>
+  </div>
+</section>
+
+<section class="reserve" id="reserve">
+  <span class="eyebrow">Seats Are Limited</span>
+  <h2 style="margin-top:0.8rem;">Book a table before the coals go quiet.</h2>
+  <p>We seat in two nightly turns. Reservations open thirty days ahead and disappear quickly.</p>
+  <a class="btn" href="mailto:hello@phantomskitchen.com?subject=Reservation%20Request"><span>Request a Table</span></a>
+</section>
+
+<footer>
+  <span class="brandmark">Phantom's Kitchen</span>
+  &copy; 2026 Phantom's Kitchen. All rights reserved.
+</footer>
+
+<script>
+  // Signature element: faint ember/wisp particles drifting up through the hero,
+  // suggesting smoke rising off the grill in the dark dining room.
+  (function(){
+    var canvas = document.getElementById('wisp-canvas');
+    if(!canvas) return;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduceMotion) { canvas.style.display='none'; return; }
+
+    var ctx = canvas.getContext('2d');
+    var hero = canvas.parentElement;
+    var particles = [];
+    var W, H;
+
+    function resize(){
+      W = canvas.width = hero.offsetWidth;
+      H = canvas.height = hero.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function spawn(){
+      return {
+        x: Math.random()*W,
+        y: H + 20,
+        r: 1 + Math.random()*2.2,
+        speed: 0.25 + Math.random()*0.5,
+        drift: (Math.random()-0.5)*0.4,
+        life: 0,
+        maxLife: 400 + Math.random()*300,
+        hue: Math.random() < 0.5 ? '169,137,90' : '122,37,48'
+      };
+    }
+    for(var i=0;i<50;i++){
+      var p = spawn();
+      p.y = Math.random()*H;
+      particles.push(p);
+    }
+
+    function tick(){
+      ctx.clearRect(0,0,W,H);
+      for(var i=0; i<particles.length; i++){
+        var p = particles[i];
+        p.y -= p.speed;
+        p.x += p.drift;
+        p.life++;
+        var fade = 1 - (p.life / p.maxLife);
+        if(fade < 0) fade = 0;
+        var alpha = Math.min(0.5, fade) * 0.5;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba('+p.hue+','+alpha+')';
+        ctx.fill();
+        if(p.y < -20 || p.life > p.maxLife){
+          particles[i] = spawn();
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+    tick();
+  })();
+</script>
+
+</body>
+</html>
